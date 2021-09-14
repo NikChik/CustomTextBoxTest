@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CustomTextBoxTest.Utilities.Converters.Interfaces
 {
-    public interface IConverter<T>
+    public interface IConverter
     {
-        T ParseFromString(string value);
-        string ConvertToString(T value);
+        object ParseFromString(string value);
+        string ConvertToString(object value);
     }
 }
