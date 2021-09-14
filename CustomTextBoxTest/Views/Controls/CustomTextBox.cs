@@ -43,11 +43,6 @@ namespace CustomTextBoxTest.Views.Controls
             set => SetValue(ValueProperty, value);
         }
 
-        static CustomTextBox()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomTextBox), new FrameworkPropertyMetadata(typeof(CustomTextBox)));
-        }
-
         public CustomTextBox()
         {
             this.KeyUp += OnKeyUp;
