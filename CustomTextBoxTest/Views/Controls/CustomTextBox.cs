@@ -25,12 +25,21 @@ namespace CustomTextBoxTest.Views.Controls
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
             nameof(Value), typeof(double), typeof(CustomTextBox), new FrameworkPropertyMetadata(
-                default(double), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnValueChanged)));
+                default(double), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                new PropertyChangedCallback(OnValueChanged), new CoerceValueCallback(CoerceValue)));
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is CustomTextBox customTextBox)
                 customTextBox.ConvertValue();
+        }
+
+        private static object CoerceValue(DependencyObject d, object value)
+        {
+            if (d is CustomTextBox customTextBox)
+                customTextBox.ConvertValue();
+
+            return value;
         }
 
         public double Value
