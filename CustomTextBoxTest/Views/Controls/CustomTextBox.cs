@@ -1,25 +1,21 @@
 ﻿using CustomTextBoxTest.Utilities.Converters.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CustomTextBoxTest.Views.Controls
 {
     public class CustomTextBox : TextBox
     {
         public static readonly DependencyProperty ConverterProperty = DependencyProperty.Register(
-            nameof(Converter), typeof(IConverter), typeof(CustomTextBox), new PropertyMetadata(default));
+            nameof(Converter), typeof(IConverter), typeof(CustomTextBox), new PropertyMetadata(
+                default(IConverter), new PropertyChangedCallback(OnControllerChanged)));
+
+        private static void OnControllerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is CustomTextBox customTextBox)
+                customTextBox.ConvertValue();
+        }
 
         public IConverter Converter
         {
@@ -28,8 +24,9 @@ namespace CustomTextBoxTest.Views.Controls
         }
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            nameof(Value), typeof(object), typeof(CustomTextBox), new FrameworkPropertyMetadata(
-                default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnValueChanged)));
+            nameof(Value), typeof(double), typeof(CustomTextBox), new FrameworkPropertyMetadata(
+                default(double), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                new PropertyChangedCallback(OnValueChanged), new CoerceValueCallback(CoerceValue)));
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -37,15 +34,18 @@ namespace CustomTextBoxTest.Views.Controls
                 customTextBox.ConvertValue();
         }
 
-        public object Value
+        private static object CoerceValue(DependencyObject d, object value)
         {
-            get => (object)GetValue(ValueProperty);
-            set => SetValue(ValueProperty, value);
+            if (d is CustomTextBox customTextBox)
+                customTextBox.ConvertValue();
+
+            return value;
         }
 
-        static CustomTextBox()
+        public double Value
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomTextBox), new FrameworkPropertyMetadata(typeof(CustomTextBox)));
+            get => (double)GetValue(ValueProperty);
+            set => SetValue(ValueProperty, value);
         }
 
         public CustomTextBox()
@@ -72,7 +72,7 @@ namespace CustomTextBoxTest.Views.Controls
                 return;
             }
 
-            Value = parsedValue;
+            Value = parsedValue.Value;
         }
 
         private void ConvertValue()
