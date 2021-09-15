@@ -8,7 +8,7 @@ namespace CustomTextBoxTest.Utilities.Converters.Interfaces
 {
     public interface IConverter
     {
-        object ParseFromString(string value);
-        string ConvertToString(object value);
+        double? ParseFromString(string value);
+        string ConvertToString(double value);
     }
 }

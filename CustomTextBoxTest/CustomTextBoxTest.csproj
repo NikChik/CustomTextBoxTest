@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\ReactiveObject.cs" />
+    <Compile Include="Utilities\Converters\FrequencyConverter.cs" />
     <Compile Include="Utilities\Converters\Interfaces\IConverter.cs" />
     <Compile Include="ViewModels\Windows\MainWindowViewModel.cs" />
     <Compile Include="Views\Controls\CustomTextBox.cs" />

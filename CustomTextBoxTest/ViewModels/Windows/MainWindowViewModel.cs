@@ -1,4 +1,5 @@
 ﻿using CustomTextBoxTest.Core;
+using CustomTextBoxTest.Utilities.Converters;
 using CustomTextBoxTest.Utilities.Converters.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace CustomTextBoxTest.ViewModels.Windows
 {
     public class MainWindowViewModel : ReactiveObject
     {
-        private long _frequency;
-        public long Frequency
+        private double _frequency;
+        public double Frequency
         {
             get => _frequency;
             set => SetAndRaise(ref _frequency, value);
@@ -22,6 +23,12 @@ namespace CustomTextBoxTest.ViewModels.Windows
         {
             get => _frequencyConverter;
             set => SetAndRaise(ref _frequencyConverter, value);
+        }
+
+        public MainWindowViewModel()
+        {
+            Frequency = 1000;
+            FrequencyConverter = new FrequencyConverter();
         }
     }
 }

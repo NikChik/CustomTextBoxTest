@@ -13,6 +13,27 @@
     </Window.DataContext>
     
     <Grid>
-        <controls:CustomTextBox/>
+        <StackPanel>
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="5"/>
+                </Style>
+                
+                <Style TargetType="{x:Type controls:CustomTextBox}">
+                    <Setter Property="Margin" Value="5"/>
+                </Style>
+            </StackPanel.Resources>
+            
+            <TextBlock Text="Введите величину:"/>
+            
+            <controls:CustomTextBox Converter="{Binding FrequencyConverter}"
+                                    Value="{Binding Frequency}"
+                                    Height="20"/>
+            
+            <TextBlock Text="Текущее значение свойства Frequency:"/>
+            
+            <TextBlock Text="{Binding Frequency}"/>
+        </StackPanel>
+        
     </Grid>
 </Window>
